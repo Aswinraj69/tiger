@@ -26,12 +26,12 @@ export default function Gallery() {
 
   // Featured gallery images for home page preview
   const featuredImages = [
-    { src: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=600&fit=crop', title: 'Main Bar' },
-    { src: 'https://images.unsplash.com/photo-1566737236500-c8ac43014b67?w=800&h=600&fit=crop', title: 'Dance Floor' },
-    { src: 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=600&fit=crop', title: 'VIP Lounge' },
-    { src: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800&h=600&fit=crop', title: 'Cocktails' },
-    { src: 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=800&h=600&fit=crop', title: 'DJ Booth' },
-    { src: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&h=600&fit=crop', title: 'Night Ambiance' },
+    { src: '/DSC_2986.jpg', title: 'interior' },
+    { src: '/DSC_2994.jpg', title: 'interior' },
+    { src: '/DSC_3003.jpg', title: 'interior' },
+    { src: '/DSC_3007.jpg', title: 'interior' },
+    { src: '/DSC_3010.jpg', title: 'interior' },
+    { src: '/DSC_3014.jpg', title: 'interior' },
   ]
 
   return (
@@ -68,7 +68,7 @@ export default function Gallery() {
         >
           {featuredImages.map((image, index) => (
             <div
-              key={index}
+              key={image.src}
               className={`relative overflow-hidden rounded-lg group cursor-pointer ${
                 index === 0 ? 'col-span-2 sm:col-span-1 sm:row-span-2' : ''
               } ${index === 3 ? 'col-span-2 sm:col-span-1' : ''}`}
@@ -80,6 +80,10 @@ export default function Gallery() {
                   src={image.src}
                   alt={image.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  loading="lazy"
+                  onError={(e) => {
+                    console.error(`Failed to load image: ${image.src}`)
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                   <div className="p-4 sm:p-6 w-full">

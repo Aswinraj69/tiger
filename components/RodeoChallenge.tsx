@@ -34,7 +34,7 @@ export default function RodeoChallenge() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(/noteimage.jpg)',
+            backgroundImage: 'url(/DSC_3101.jpg)',
             filter: 'brightness(0.8)',
           }}
         ></div>

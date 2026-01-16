@@ -87,8 +87,8 @@ export default function VideoShowcase() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1920&h=1080&fit=crop)',
-            filter: 'grayscale(100%) contrast(1.2) brightness(0.8)',
+            backgroundImage: 'url(/DSC_3122-Edit.jpg)',
+            filter: ' contrast(1.2) brightness(0.8)',
           }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-r from-dark/10 via-dark/30 to-dark/60"></div>

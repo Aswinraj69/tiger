@@ -116,7 +116,7 @@ export default function About() {
               <div className="distressed-border absolute inset-0 transform rotate-[-1deg] group-hover:rotate-0 transition-transform duration-500 z-10 pointer-events-none"></div>
               <div className="relative h-64 sm:h-80 lg:h-[400px] rounded-xl overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=1200&fit=crop"
+                  src="/DSC_3010.jpg"
                   alt="Tiger Club Interior"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
@@ -129,7 +129,7 @@ export default function About() {
               <div className="distressed-border absolute inset-0 transform rotate-[1deg] group-hover:rotate-0 transition-transform duration-500 z-10 pointer-events-none"></div>
               <div className="relative h-64 sm:h-80 lg:h-[400px] rounded-xl overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=1200&fit=crop"
+                  src="/DSC_3014.jpg"
                   alt="Tiger Club Dining Area"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
