@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 
 interface HeroProps {
   isLoaded: boolean
@@ -97,14 +98,22 @@ export default function Hero({ isLoaded }: HeroProps) {
 
       {/* Hero Content */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-        <h1
-          className={`font-display text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black tracking-[0.1em] mb-4 sm:mb-6 gradient-text leading-none ${
+        <div
+          className={`mb-4 sm:mb-6 leading-none ${
             isLoaded ? 'animate-fade-in-up' : 'opacity-0'
           }`}
           style={{ animationDelay: '0.2s' }}
         >
-          TIGER
-        </h1>
+          <Image
+            src="/tigerlogo.png"
+            alt="Tiger Club Logo"
+            width={600}
+            height={300}
+            className="w-[200px] h-auto sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[600px] mx-auto object-contain drop-shadow-2xl"
+            priority
+            quality={95}
+          />
+        </div>
         <p
           className={`text-xl sm:text-2xl md:text-3xl font-heading font-bold tracking-[0.3em] uppercase text-gray-300 mb-3 sm:mb-4 ${
             isLoaded ? 'animate-fade-in-up' : 'opacity-0'

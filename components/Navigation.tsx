@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false)
@@ -73,11 +74,19 @@ export default function Navigation() {
               onMouseLeave={() => setHoveredLink(null)}
             >
               <div className="absolute inset-0 bg-primary/20 blur-xl group-hover:bg-primary/40 transition-all duration-500 rounded-lg opacity-0 group-hover:opacity-100"></div>
-              <span className={`relative font-display text-3xl sm:text-4xl font-black tracking-[0.2em] text-white transition-all duration-300 ${
-                hoveredLink === 'logo' ? 'text-primary scale-110' : ''
+              <div className={`relative transition-all duration-300 ${
+                hoveredLink === 'logo' ? 'scale-110' : ''
               }`}>
-                TIGER
-              </span>
+                <Image
+                  src="/tigerlogo.png"
+                  alt="Tiger Club Logo"
+                  width={200}
+                  height={100}
+                  className="h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28 w-auto object-contain"
+                  priority
+                  quality={90}
+                />
+              </div>
               <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-500"></div>
             </Link>
 
