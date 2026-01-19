@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
+import ScrollImageCard from '@/components/ScrollImageCard'
 
 // Dynamically import heavy components to reduce initial bundle size
 const RodeoChallenge = dynamic(() => import('@/components/RodeoChallenge'), {
@@ -52,6 +53,7 @@ export default function Home() {
     <main className="min-h-screen bg-dark text-white overflow-x-hidden">
       <Navigation />
       <Hero isLoaded={isLoaded} />
+      <ScrollImageCard />
       <RodeoChallenge />
       <VideoShowcase />
       <Menu />
