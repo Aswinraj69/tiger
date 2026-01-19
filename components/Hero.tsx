@@ -156,7 +156,7 @@ export default function Hero({ isLoaded }: HeroProps) {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-gray-400 text-xs uppercase tracking-wider animate-bounce">
+      <div className="absolute bottom-8 left-0 right-0 z-10 flex flex-col items-center justify-center gap-2 text-gray-400 text-xs uppercase tracking-wider animate-bounce">
         <div className="w-0.5 h-10 bg-gradient-to-b from-primary to-transparent"></div>
         <span>Scroll</span>
       </div>
