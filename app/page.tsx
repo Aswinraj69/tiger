@@ -1,14 +1,29 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
-import RodeoChallenge from '@/components/RodeoChallenge'
-import VideoShowcase from '@/components/VideoShowcase'
-import Menu from '@/components/Menu'
-import VideoCards from '@/components/VideoCards'
-import About from '@/components/About'
-import Footer from '@/components/Footer'
+
+// Dynamically import heavy components to reduce initial bundle size
+const RodeoChallenge = dynamic(() => import('@/components/RodeoChallenge'), {
+  loading: () => <div className="min-h-screen" />,
+})
+const VideoShowcase = dynamic(() => import('@/components/VideoShowcase'), {
+  loading: () => <div className="min-h-screen" />,
+})
+const Menu = dynamic(() => import('@/components/Menu'), {
+  loading: () => <div className="min-h-screen" />,
+})
+const VideoCards = dynamic(() => import('@/components/VideoCards'), {
+  loading: () => <div className="min-h-screen" />,
+})
+const About = dynamic(() => import('@/components/About'), {
+  loading: () => <div className="min-h-screen" />,
+})
+const Footer = dynamic(() => import('@/components/Footer'), {
+  loading: () => null,
+})
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)

@@ -1,6 +1,66 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, memo, useMemo } from 'react'
+
+// Video card type definition
+type VideoCardData = {
+  id: number
+  title: string
+  description: string
+  video: string
+}
+
+// Memoize video cards data - moved outside component for accessibility
+const VIDEO_CARDS: VideoCardData[] = [
+  {
+    id: 1,
+    title: 'Premium Cocktails',
+    description: 'Crafted with precision',
+    video: '/video10.mp4',
+  },
+  {
+    id: 2,
+    title: 'Live Music',
+    description: 'Unforgettable performances',
+    video: '/video6.mp4',
+  },
+  {
+    id: 3,
+    title: 'Dance Floor',
+    description: 'Energy never stops',
+    video: '/video7.mp4',
+  },
+  {
+    id: 4,
+    title: 'VIP Experience',
+    description: 'Exclusive luxury',
+    video: '/video3.mp4',
+  },
+  {
+    id: 5,
+    title: 'Night Vibes',
+    description: 'Where legends are made',
+    video: '/video4.mp4',
+  },
+  {
+    id: 6,
+    title: 'Premium Bar',
+    description: 'World-class selection',
+    video: '/video8.mp4',
+  },
+  {
+    id: 7,
+    title: 'Signature Drinks',
+    description: 'Expert mixology',
+    video: '/video9.mp4',
+  },
+  {
+    id: 8,
+    title: 'Party Atmosphere',
+    description: 'Unmatched energy',
+    video: '/video2.mp4',
+  },
+]
 
 export default function VideoCards() {
   const [isVisible, setIsVisible] = useState(false)
@@ -24,57 +84,6 @@ export default function VideoCards() {
     return () => observer.disconnect()
   }, [])
 
-  const videoCards = [
-    {
-      id: 1,
-      title: 'Premium Cocktails',
-      description: 'Crafted with precision',
-      video: '/party1.mp4',
-    },
-    {
-      id: 2,
-      title: 'Live Music',
-      description: 'Unforgettable performances',
-      video: '/party2.mp4',
-    },
-    {
-      id: 3,
-      title: 'Dance Floor',
-      description: 'Energy never stops',
-      video: '/party1.mp4',
-    },
-    {
-      id: 4,
-      title: 'VIP Experience',
-      description: 'Exclusive luxury',
-      video: '/party2.mp4',
-    },
-    {
-      id: 5,
-      title: 'Night Vibes',
-      description: 'Where legends are made',
-      video: '/party1.mp4',
-    },
-    {
-      id: 6,
-      title: 'Premium Bar',
-      description: 'World-class selection',
-      video: '/party2.mp4',
-    },
-    {
-      id: 7,
-      title: 'Signature Drinks',
-      description: 'Expert mixology',
-      video: '/party1.mp4',
-    },
-    {
-      id: 8,
-      title: 'Party Atmosphere',
-      description: 'Unmatched energy',
-      video: '/party2.mp4',
-    },
-  ]
-
   return (
     <section
       ref={sectionRef}
@@ -88,7 +97,7 @@ export default function VideoCards() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source src="/backgrount4.mp4" type="video/mp4" />
         </video>
@@ -125,7 +134,7 @@ export default function VideoCards() {
             }}
           >
             <div className="flex gap-6 w-max">
-              {videoCards.map((card, index) => (
+              {VIDEO_CARDS.map((card, index) => (
                 <VideoCard
                   key={card.id}
                   card={card}
@@ -148,12 +157,34 @@ export default function VideoCards() {
   )
 }
 
-// Video Card Component
-function VideoCard({ card, index, isVisible }: { card: any; index: number; isVisible: boolean }) {
+// Video Card Component - Memoized for performance
+const VideoCard = memo(({ card, index, isVisible }: { card: VideoCardData; index: number; isVisible: boolean }) => {
   const [videoLoaded, setVideoLoaded] = useState(false)
+  const [shouldLoad, setShouldLoad] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  // Intersection observer to lazy load videos
+  useEffect(() => {
+    if (!cardRef.current) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(cardRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
+    if (!shouldLoad) return
+    
     const video = videoRef.current
     if (!video) return
 
@@ -162,31 +193,28 @@ function VideoCard({ card, index, isVisible }: { card: any; index: number; isVis
     }
 
     const handleLoadedData = () => {
-      // Mark as loaded as soon as basic data is ready (faster than full canplay)
       setVideoLoaded(true)
     }
 
     video.addEventListener('loadeddata', handleLoadedData, { once: true })
     video.addEventListener('canplay', handleCanPlay, { once: true })
 
-    // Try to autoplay the video as soon as possible
-    video
-      .play()
-      .then(() => {
-        setVideoLoaded(true)
+    // Only try to play if video is in viewport
+    if (shouldLoad) {
+      video.play().catch(() => {
+        // Autoplay might be blocked
       })
-      .catch(() => {
-        // Autoplay might be blocked on some browsers, but card will still show once loaded
-      })
+    }
 
     return () => {
       video.removeEventListener('loadeddata', handleLoadedData)
       video.removeEventListener('canplay', handleCanPlay)
     }
-  }, [])
+  }, [shouldLoad])
 
   return (
     <div
+      ref={cardRef}
       className={`flex-shrink-0 group ${
         isVisible ? 'animate-fade-in-up' : 'opacity-0'
       }`}
@@ -198,18 +226,20 @@ function VideoCard({ card, index, isVisible }: { card: any; index: number; isVis
             <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
-        <video
-          ref={videoRef}
-          className={`w-full h-full object-cover transition-opacity duration-500 ${
-            videoLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src={card.video} type="video/mp4" />
-        </video>
+        {shouldLoad && (
+          <video
+            ref={videoRef}
+            className={`w-full h-full object-cover transition-opacity duration-500 ${
+              videoLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          >
+            <source src={card.video} type="video/mp4" />
+          </video>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-dark/95 via-dark/60 to-transparent flex items-end">
           <div className="p-4 sm:p-6 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
             <h3 className="font-display text-xl sm:text-2xl font-black text-white mb-1 tracking-[0.05em]">
@@ -223,4 +253,6 @@ function VideoCard({ card, index, isVisible }: { card: any; index: number; isVis
       </div>
     </div>
   )
-}
+})
+
+VideoCard.displayName = 'VideoCard'

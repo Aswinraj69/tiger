@@ -69,7 +69,7 @@ export default function Hero({ isLoaded }: HeroProps) {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               poster="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1920&h=1080&fit=crop"
               onLoadedData={() => {
                 if (videoRef.current) {

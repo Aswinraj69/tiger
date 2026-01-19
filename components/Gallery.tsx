@@ -1,7 +1,51 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo, memo } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
+
+// Memoize featured images
+const FEATURED_IMAGES = [
+  { src: '/DSC_2986.jpg', title: 'interior' },
+  { src: '/DSC_2994.jpg', title: 'interior' },
+  { src: '/DSC_3003.jpg', title: 'interior' },
+  { src: '/DSC_3007.jpg', title: 'interior' },
+  { src: '/DSC_3010.jpg', title: 'interior' },
+  { src: '/DSC_3014.jpg', title: 'interior' },
+]
+
+// Memoized gallery item
+const GalleryImageItem = memo(({ image, index }: { image: typeof FEATURED_IMAGES[0], index: number }) => (
+  <div
+    className={`relative overflow-hidden rounded-lg group cursor-pointer ${
+      index === 0 ? 'col-span-2 sm:col-span-1 sm:row-span-2' : ''
+    } ${index === 3 ? 'col-span-2 sm:col-span-1' : ''}`}
+  >
+    <div className={`relative ${
+      index === 0 ? 'h-64 sm:h-full' : 'h-48 sm:h-64 lg:h-80'
+    }`}>
+      <Image
+        src={image.src}
+        alt={image.title}
+        width={800}
+        height={600}
+        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+        loading={index < 3 ? 'eager' : 'lazy'}
+        quality={85}
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 33vw"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+        <div className="p-4 sm:p-6 w-full">
+          <h3 className="font-display text-lg sm:text-xl font-black text-white tracking-[0.05em]">
+            {image.title}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+))
+
+GalleryImageItem.displayName = 'GalleryImageItem'
 
 export default function Gallery() {
   const [isVisible, setIsVisible] = useState(false)
@@ -24,15 +68,8 @@ export default function Gallery() {
     return () => observer.disconnect()
   }, [])
 
-  // Featured gallery images for home page preview
-  const featuredImages = [
-    { src: '/DSC_2986.jpg', title: 'interior' },
-    { src: '/DSC_2994.jpg', title: 'interior' },
-    { src: '/DSC_3003.jpg', title: 'interior' },
-    { src: '/DSC_3007.jpg', title: 'interior' },
-    { src: '/DSC_3010.jpg', title: 'interior' },
-    { src: '/DSC_3014.jpg', title: 'interior' },
-  ]
+  // Memoize featured images
+  const featuredImages = useMemo(() => FEATURED_IMAGES, [])
 
   return (
     <section
@@ -67,33 +104,7 @@ export default function Gallery() {
           style={{ animationDelay: '0.2s' }}
         >
           {featuredImages.map((image, index) => (
-            <div
-              key={image.src}
-              className={`relative overflow-hidden rounded-lg group cursor-pointer ${
-                index === 0 ? 'col-span-2 sm:col-span-1 sm:row-span-2' : ''
-              } ${index === 3 ? 'col-span-2 sm:col-span-1' : ''}`}
-            >
-              <div className={`relative ${
-                index === 0 ? 'h-64 sm:h-full' : 'h-48 sm:h-64 lg:h-80'
-              }`}>
-                <img
-                  src={image.src}
-                  alt={image.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  loading="lazy"
-                  onError={(e) => {
-                    console.error(`Failed to load image: ${image.src}`)
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                  <div className="p-4 sm:p-6 w-full">
-                    <h3 className="font-display text-lg sm:text-xl font-black text-white tracking-[0.05em]">
-                      {image.title}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <GalleryImageItem key={image.src} image={image} index={index} />
           ))}
         </div>
 

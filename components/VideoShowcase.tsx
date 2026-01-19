@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 
 export default function VideoShowcase() {
   const [isVisible, setIsVisible] = useState(false)
@@ -84,13 +85,17 @@ export default function VideoShowcase() {
     >
       {/* Black and White Background Image */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat grayscale"
-          style={{
-            backgroundImage: 'url(/DSC_3122-Edit.jpg)',
-            filter: ' contrast(1.2) brightness(0.8)',
-          }}
-        ></div>
+        <div className="absolute inset-0 grayscale" style={{ filter: 'contrast(1.2) brightness(0.8)' }}>
+          <Image
+            src="/DSC_3122-Edit.jpg"
+            alt="Background"
+            fill
+            className="object-cover"
+            quality={75}
+            priority={false}
+            sizes="100vw"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-r from-dark/10 via-dark/30 to-dark/60"></div>
       </div>
 
@@ -111,14 +116,18 @@ export default function VideoShowcase() {
                 <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-lg p-6 shadow-2xl border-2 border-gray-700">
                   <div className="bg-black rounded-lg p-4 relative overflow-hidden">
                     <div className="absolute inset-0 bg-black z-0"></div>
-                    <img
-                      src="/wild.png"
+                    <Image
+                      src="/tiger.png"
                       alt="Wild"
+                      width={200}
+                      height={100}
                       className="relative z-10 w-full h-auto object-contain filter drop-shadow-lg"
                       style={{ 
                         backgroundColor: 'transparent',
                         imageRendering: 'crisp-edges'
                       }}
+                      loading="lazy"
+                      quality={90}
                     />
                   </div>
                 </div>
@@ -168,10 +177,10 @@ export default function VideoShowcase() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="metadata"
                 >
                   <source
-                    src="/party1.mp4"
+                    src="/video1.mp4"
                     type="video/mp4"
                   />
                 </video>
@@ -218,10 +227,10 @@ export default function VideoShowcase() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="metadata"
                 >
                   <source
-                    src="/party2.mp4"
+                    src="/video5.mp4"
                     type="video/mp4"
                   />
                 </video>
