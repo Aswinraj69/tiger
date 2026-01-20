@@ -140,7 +140,7 @@ export default function MenuPage() {
             </Link>
             <Link
               href="/#about"
-              className="premium-button-outline inline-block text-white px-8 py-4 text-base font-heading font-bold uppercase tracking-[0.15em] relative overflow-hidden group"
+              className="premium-button-outline inline-block text-black px-8 py-4 text-base font-heading font-bold uppercase tracking-[0.15em] relative overflow-hidden group"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 LEARN MORE

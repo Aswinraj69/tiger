@@ -136,15 +136,10 @@ export default function Hero({ isLoaded }: HeroProps) {
           }`}
           style={{ animationDelay: '0.8s' }}
         >
-          <button className="premium-button-primary text-white px-8 sm:px-12 py-4 sm:py-5 text-sm sm:text-base font-heading font-bold uppercase tracking-[0.15em] relative overflow-hidden group w-full sm:w-auto">
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              EXPERIENCE THE NIGHT
-              <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          </button>
-          <button className="premium-button-outline text-white px-8 sm:px-12 py-4 sm:py-5 text-sm sm:text-base font-heading font-bold uppercase tracking-[0.15em] relative overflow-hidden group w-full sm:w-auto">
+          <button 
+            onClick={() => window.open('https://www.instagram.com/tigerbardxb?igsh=YjNyYXFwNjJyMjFo', '_blank', 'noopener,noreferrer')}
+            className="premium-button-outline text-white px-8 sm:px-12 py-4 sm:py-5 text-sm sm:text-base font-heading font-bold uppercase tracking-[0.15em] relative overflow-hidden group w-full sm:w-auto"
+          >
             <span className="relative z-10 flex items-center justify-center gap-2">
               VIEW EVENTS
               <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
